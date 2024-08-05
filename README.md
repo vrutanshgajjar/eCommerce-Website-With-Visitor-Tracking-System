@@ -105,6 +105,3 @@ Phishing Scams: - E-commerce sites are also prone to phishing scams sent by know
 ➢ Best Practices to Curb the Security Issues in E-commerce Fraud costs online retailers billions of dollars yearly. To solve the security issues in ecommerce, merchants and payment companies should collaboratively come up with effective solutions. Though these security issues are becoming intense with time, there are solutions that online retailers can implement without affecting the user experience of their sites. In other words, they can adopt the following solutions without impacting the customer experience. 
 Require stronger passwords: - The reason why hackers easily gain access to users’ login credentials is that most ecommerce sites fail to ask users to provide stronger passwords. Hackers can utilize algorithms to figure out the passwords easily. A strong password contains a mix of alphabetical letters and numbers. 
 Use SSL Certificates: - It is mandatory for e-commerce websites to have SSL certificates for facilitating secure user connections. These certificates are also useful in authenticating the identity of an online retail business and securing users’ checkout data. They also keep customers of online retail stores protected from financial fraud or information loss.
-
-
-4.5 TEST CASE DESGIN: -
