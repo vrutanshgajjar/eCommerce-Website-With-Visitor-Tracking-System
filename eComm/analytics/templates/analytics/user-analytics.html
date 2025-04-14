@@ -1,0 +1,173 @@
+{% extends 'base.html' %}
+
+{% block title %} Customers Analytics {% endblock %}
+
+
+{% block JavaScript %}
+
+<script>
+
+    $(document).ready(function () {
+
+        function renderChart(id, labels, data) {
+            // var ctx = document.getElementById('myChart').getContext('2d');
+            var ctx = $('#' + id)
+
+            var myChart = new Chart(ctx, {
+                type: 'line', // pie
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Per User Sales',
+                        data: data,
+                        backgroundColor: 'rgba(59, 59, 152, 0.45)', 
+                        borderColor: 'rgba(59, 59, 152,1.0)', 
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true
+                            }
+                        }]
+                    }
+                }
+            });
+        };
+
+        function getSalesData(type, id){
+            var url = '/analytics/sales/data/'
+            var method = 'GET'
+            var data = { "type": type }
+
+            $.ajax({
+                url: url,
+                method: method,
+                data: data,
+                success: function (responseData) {
+                    console.log(responseData)
+                    renderChart(id, responseData.labels, responseData.data)
+                },
+                error: function (errorData) {
+                    alert("An Error Occur while rendering Chart!!")
+                }
+            })
+        }
+
+        getSalesData("UserAnalytics", "CustomersChart")
+
+        
+
+    });
+
+
+</script>
+
+{% endblock %}
+
+
+{% block content %}
+
+
+<div class="container-fluid">
+    <div class="row pb-4">
+        <nav class="col-md-2 d-none d-md-block bg-light sidebar">
+            <div class="sidebar-sticky">
+
+                <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+                    <span>Analytics Dashboard</span>
+                    <a class="d-flex align-items-center text-muted" href="#" aria-label="Add a new report">
+                        <span data-feather="plus-circle"></span>
+                    </a>
+                </h6>
+
+
+                <ul class="nav flex-column">
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'this-week-sales-analytics' %}">
+                            <i class="fas fa-file-signature"></i>
+                            Orders
+                        </a>
+                    </li>
+
+                    <nav class="nav nav-pills flex-column">
+                        <a class="nav-link ml-3 my-1" href="{% url 'this-week-sales-analytics' %}"> <i
+                                class="fas fa-chart-area"></i> This Week
+                            Sales</a>
+                        <a class="nav-link ml-3 my-1" href="{% url 'last-week-sales-analytics' %}"> <i
+                                class="fas fa-chart-area"></i> Last Week
+                            Sales</a>
+                        <a class="nav-link ml-3 my-1" href="{% url 'three-week-sales-analytics' %}"> <i class="fas fa-chart-area"></i> Three Weeks
+                            Ago Sales </a>
+                        <a class="nav-link ml-3 my-1" href="{% url 'four-week-sales-analytics' %}"> <i class="fas fa-chart-area"></i> Four Weeks
+                            Ago Sales </a>
+                    </nav>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'product-analytics' %}">
+                            <i class="fas fa-shopping-cart"></i>
+                            Products
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'customer-analytics' %}">
+                            <i class="fas fa-user-friends"></i>
+                            Customers
+                        </a>
+                    </li>
+                    <!-- <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <i class="fas fa-file-invoice"></i>
+                            Reports
+                        </a>
+                    </li> -->
+                </ul>
+            </div>
+        </nav>
+
+
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+            <div
+                class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                <h1 class="h2">Analytics Dashboard: </h1>
+                <!-- <div class="btn-toolbar mb-2 mb-md-0">
+                    <button type="button" class="btn btn-sm btn-outline-secondary ">
+                        <span data-feather="calendar"></span>
+                        Save This Report <i class="fas fa-file-download ml-1"></i>
+                    </button>
+                </div> -->
+            </div>
+
+            <canvas class="my-4 w-100" id="CustomersChart" width="900" height="380"></canvas>
+
+            <h2>Customers Info: </h2>
+            <div class="table-responsive">
+                <table class="table table-striped table-sm">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Customer Name</th>
+                            <th>Total Amount Spend</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for name, total in cust_data.items %}
+                        <tr>
+                            <td> {{ forloop.counter }} </td>
+                            <td> {{ name }} </td>
+                            <td> {{ total }} </td>
+                        </tr>
+                        {% endfor %}
+
+                    </tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+</div>
+
+
+{% endblock %}

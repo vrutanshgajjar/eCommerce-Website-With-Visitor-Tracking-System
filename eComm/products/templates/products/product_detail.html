@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+
+{% block title %} Product: {{ product.title }} {% endblock %}
+
+{% block content %}
+    <div class="container border mt-5 pt-4">
+        <div class="container dark-grey-text mt-5">
+            <!--Grid row-->
+            <div class="row">
+                <!--Grid column-->
+                <div class="col-md-6 mb-4">
+                    <img src="{{ product.image.url }}" class="img img-fluid" alt="{{ product.title }}">
+                </div>
+                <!--Grid column-->
+    
+                <!--Grid column-->
+                <div class="col-md-6 mb-4">
+                    <!--Content-->
+                    <div class="p-4">
+                        <span class="mr-1">Since: {{ product.timestamp|timesince }} ago</span>
+
+                        <p class="font-weight-bold h2">{{ product.title }}</p>
+                        <hr>
+
+                        <p class="lead h6 mb-0"><b>Category: </b></p>
+                        <p> {{ product.category }}</p>
+                        <p class="mb-0"><b>Views: </b>
+                                {% for key, value in prod_views_dict.items %}
+                                    {% if key == product.title %}
+                                        {{ value }}
+                                    {% endif %}
+                                {% endfor %} </p>
+
+                        <p class="lead">
+                            <p class="font-weight-bold h5">Price: </p>
+                            <span> ₹ {{ product.price }}</span>
+                        </p>
+
+                        <p class="font-weight-bold h5">Description: </p>
+                        <p>{{ product.description|truncatewords:15 }} <a href="#mydesc">Read More</a></p>
+
+
+                        <!-- <a href="#" class="btn btn-primary btn-md my-0 p ">Add to cart 
+                            <i class="fas fa-cart-arrow-down"></i>
+                        </a> -->
+                        {% include 'carts/snippets/cart-button.html' with product=product cart=cart %}
+
+                    </div>
+                    <!--Content-->
+                </div>
+                <!--Grid column-->
+            </div>
+            <!--Grid row-->
+    
+            <hr id="mydesc">
+    
+            <!--Grid row-->
+            <div class="row d-flex justify-content-center pb-3">
+    
+                <!--Grid column-->
+                <div class="col-md-8 text-center">
+                    <h4 class="my-4 h3">Additional information</h4>
+                    <p>{{ product.description }} </p>
+                </div>
+                <!--Grid column-->
+            </div>
+            <hr>
+            <!--Grid row-->
+        </div>
+    </div>
+{% endblock %}

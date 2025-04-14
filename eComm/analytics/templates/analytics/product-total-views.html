@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block title %} Product Total Views {% endblock %}
+
+{% block content %}
+
+<div class="container">
+    <h1>Product Total Views</h1>
+    <hr>
+    <table class="table">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Product Name</th>
+                <th scope="col">Total Views</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for prod, count in prod_views_dict.items %}
+            <tr>
+                <th>{{ forloop.counter }}</th>
+                <td>{{ prod }} </td>
+                <td>{{ count }} </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+</div>
+
+{% endblock %}
