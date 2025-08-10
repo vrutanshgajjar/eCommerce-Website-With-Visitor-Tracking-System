@@ -1,1 +1,1 @@
-web: gunicorn <your_project_folder>.wsgi --log-file -
+web: gunicorn eComm.wsgi --log-file -
